@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+    --font-sans: 'Just Me Again Down Here', sans-serif;
+}
