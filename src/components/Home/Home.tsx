@@ -1,8 +1,13 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const recipes = {
+import { useLocation } from 'react-router-dom'
+import Recipe from '../Recipe/Recipe';
+import { ColorsENUM, Recipes, RecipeType } from '../../types/recipeTypes';
+import Chip from '../Chip/Chip';
+import InputWithImage from '../InputWithImage/InputWithImage';
+import { useState } from 'react';
+
+
+const recipes: Recipes = {
     "recipes": [
         {
             "id": 1,
@@ -12,7 +17,9 @@ const recipes = {
             ],
             "name": "Classic Margherita Pizza",
             "cuisine": "Italian",
-            "cookTimeMinutes": 15
+            "cookTimeMinutes": 15,
+            "image": "https://cdn.dummyjson.com/recipe-images/1.webp",
+            "difficulty": "Easy"
         },
         {
             "id": 2,
@@ -23,7 +30,9 @@ const recipes = {
             ],
             "name": "Vegetarian Stir-Fry",
             "cuisine": "Asian",
-            "cookTimeMinutes": 20
+            "cookTimeMinutes": 20,
+            "image": "https://cdn.dummyjson.com/recipe-images/2.webp",
+            "difficulty": "Medium"
         },
         {
             "id": 3,
@@ -34,7 +43,9 @@ const recipes = {
             ],
             "name": "Chocolate Chip Cookies",
             "cuisine": "American",
-            "cookTimeMinutes": 10
+            "cookTimeMinutes": 10,
+            "image": "https://cdn.dummyjson.com/recipe-images/3.webp",
+            "difficulty": "Easy"
         },
         {
             "id": 4,
@@ -44,7 +55,9 @@ const recipes = {
             ],
             "name": "Chicken Alfredo Pasta",
             "cuisine": "Italian",
-            "cookTimeMinutes": 20
+            "cookTimeMinutes": 20,
+            "image": "https://cdn.dummyjson.com/recipe-images/4.webp",
+            "difficulty": "Medium"
         },
         {
             "id": 5,
@@ -54,7 +67,9 @@ const recipes = {
             ],
             "name": "Mango Salsa Chicken",
             "cuisine": "Mexican",
-            "cookTimeMinutes": 25
+            "cookTimeMinutes": 25,
+            "image": "https://cdn.dummyjson.com/recipe-images/5.webp",
+            "difficulty": "Easy"
         },
         {
             "id": 6,
@@ -64,7 +79,9 @@ const recipes = {
             ],
             "name": "Quinoa Salad with Avocado",
             "cuisine": "Mediterranean",
-            "cookTimeMinutes": 15
+            "cookTimeMinutes": 15,
+            "image": "https://cdn.dummyjson.com/recipe-images/6.webp",
+            "difficulty": "Easy"
         }
     ],
     "total": 50,
@@ -74,12 +91,44 @@ const recipes = {
 
 
 const Home = () => {
+
+    const [activeFilter, setActiveFilter] = useState<string>("All");
+
+
+
     const location = useLocation();
     console.log(location.pathname.startsWith('/recipes'))
+    console.log(recipes.recipes)
     return (
         <>
-            <div>Home</div>
+            <div className='flex flex-col md:flex-row justify-between py-10 px-5 gap-10'>
+                <InputWithImage />
+                <div className='flex md:flex-row-reverse gap-2 flex-row-reverse flex-wrap-reverse justify-end'>
 
+                    {["All", "Easy", "Medium", "Hard"].reverse().map(elem => (
+                        <Chip
+                            color={activeFilter === elem ? ColorsENUM.BLUE : undefined}
+                            backgroundColor={activeFilter === elem}
+                            onClick={() => setActiveFilter(elem)}
+                        >
+                            {elem}
+                        </Chip>
+                    ))}
+
+                </div>
+            </div>
+            <div className="relative  flex-col md:flex-row md:flex-wrap flex items-center md:items-start justify-center xl:justify-between min-h-full">
+                {recipes.recipes && recipes.recipes.map((recipe: RecipeType) => (
+                    <Recipe key={recipe.id} {...recipe} />
+                ))}
+            </div>
+            <div className='flex p-10 justify-center'>
+                <div
+                    onClick={() => { }}
+                    className='cursor-pointer font-justmeagain border-solid border-1 rounded-lg px-5 h-auto flex items-center text-3xl'>
+                    Load more
+                </div>
+            </div >
         </>
     )
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const Logo = () => {
     return (
@@ -6,7 +6,7 @@ const Logo = () => {
             <hr className='text-white w-2/5' />
             <div className='mx-10 flex flex-row items-center justify-center h-full object-contain'>
                 <img className='w-auto h-full object-contain' src='../../public/images/logo.png' alt="Logo" />
-                <span className='font-sans text-6xl px-5 whitespace-nowrap'> Recipe Book </span>
+                <span className='font-justmeagain text-6xl px-5 whitespace-nowrap'> Recipe Book </span>
             </div>
             <hr className='text-white w-2/5' />
         </div>
