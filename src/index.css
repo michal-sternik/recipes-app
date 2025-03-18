@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-    --font-sans: 'Just Me Again Down Here', sans-serif;
+    --font-justmeagain: 'Just Me Again Down Here', sans-serif;
+    --font-nunito: 'Nunito Sans', 'sans-serif';
+
+    --color-green: rgba(22, 137, 20, 1);
+    --color-red: rgba(210, 12, 12, 1);
+    --color-orange: rgba(198, 95, 0, 1);
+    --color-blue: rgba(36, 79, 233, 1);
 }

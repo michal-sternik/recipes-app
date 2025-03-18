@@ -1,10 +1,13 @@
 
 import { useLocation } from 'react-router-dom'
 import Recipe from '../Recipe/Recipe';
-import { RecipeType } from '../../types/recipeTypes';
+import { ColorsENUM, Recipes, RecipeType } from '../../types/recipeTypes';
+import Chip from '../Chip/Chip';
+import InputWithImage from '../InputWithImage/InputWithImage';
+import { useState } from 'react';
 
 
-const recipes = {
+const recipes: Recipes = {
     "recipes": [
         {
             "id": 1,
@@ -88,15 +91,45 @@ const recipes = {
 
 
 const Home = () => {
+
+    const [activeFilter, setActiveFilter] = useState<string>("All");
+
+
+
     const location = useLocation();
     console.log(location.pathname.startsWith('/recipes'))
     console.log(recipes.recipes)
     return (
-        <div className="relative md:h-140 flex-col md:flex-row md:flex-wrap flex items-center md:items-start justify-center min-h-full">
-            {recipes.recipes && recipes.recipes.map((recipe: RecipeType) => (
-                <Recipe key={recipe.id} {...recipe} />
-            ))}
-        </div>
+        <>
+            <div className='flex flex-col md:flex-row justify-between py-10 px-5 gap-10'>
+                <InputWithImage />
+                <div className='flex md:flex-row-reverse gap-2 flex-row-reverse flex-wrap-reverse justify-end'>
+
+                    {["All", "Easy", "Medium", "Hard"].reverse().map(elem => (
+                        <Chip
+                            color={activeFilter === elem ? ColorsENUM.BLUE : undefined}
+                            backgroundColor={activeFilter === elem}
+                            onClick={() => setActiveFilter(elem)}
+                        >
+                            {elem}
+                        </Chip>
+                    ))}
+
+                </div>
+            </div>
+            <div className="relative  flex-col md:flex-row md:flex-wrap flex items-center md:items-start justify-center xl:justify-between min-h-full">
+                {recipes.recipes && recipes.recipes.map((recipe: RecipeType) => (
+                    <Recipe key={recipe.id} {...recipe} />
+                ))}
+            </div>
+            <div className='flex p-10 justify-center'>
+                <div
+                    onClick={() => { }}
+                    className='cursor-pointer font-justmeagain border-solid border-1 rounded-lg px-5 h-auto flex items-center text-3xl'>
+                    Load more
+                </div>
+            </div >
+        </>
     )
 }
 
