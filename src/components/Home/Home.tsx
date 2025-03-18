@@ -1,7 +1,9 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useLocation } from 'react-router-dom'
+import Recipe from '../Recipe/Recipe';
+import { RecipeType } from '../../types/recipeTypes';
+
+
 const recipes = {
     "recipes": [
         {
@@ -12,7 +14,9 @@ const recipes = {
             ],
             "name": "Classic Margherita Pizza",
             "cuisine": "Italian",
-            "cookTimeMinutes": 15
+            "cookTimeMinutes": 15,
+            "image": "https://cdn.dummyjson.com/recipe-images/1.webp",
+            "difficulty": "Easy"
         },
         {
             "id": 2,
@@ -23,7 +27,9 @@ const recipes = {
             ],
             "name": "Vegetarian Stir-Fry",
             "cuisine": "Asian",
-            "cookTimeMinutes": 20
+            "cookTimeMinutes": 20,
+            "image": "https://cdn.dummyjson.com/recipe-images/2.webp",
+            "difficulty": "Medium"
         },
         {
             "id": 3,
@@ -34,7 +40,9 @@ const recipes = {
             ],
             "name": "Chocolate Chip Cookies",
             "cuisine": "American",
-            "cookTimeMinutes": 10
+            "cookTimeMinutes": 10,
+            "image": "https://cdn.dummyjson.com/recipe-images/3.webp",
+            "difficulty": "Easy"
         },
         {
             "id": 4,
@@ -44,7 +52,9 @@ const recipes = {
             ],
             "name": "Chicken Alfredo Pasta",
             "cuisine": "Italian",
-            "cookTimeMinutes": 20
+            "cookTimeMinutes": 20,
+            "image": "https://cdn.dummyjson.com/recipe-images/4.webp",
+            "difficulty": "Medium"
         },
         {
             "id": 5,
@@ -54,7 +64,9 @@ const recipes = {
             ],
             "name": "Mango Salsa Chicken",
             "cuisine": "Mexican",
-            "cookTimeMinutes": 25
+            "cookTimeMinutes": 25,
+            "image": "https://cdn.dummyjson.com/recipe-images/5.webp",
+            "difficulty": "Easy"
         },
         {
             "id": 6,
@@ -64,7 +76,9 @@ const recipes = {
             ],
             "name": "Quinoa Salad with Avocado",
             "cuisine": "Mediterranean",
-            "cookTimeMinutes": 15
+            "cookTimeMinutes": 15,
+            "image": "https://cdn.dummyjson.com/recipe-images/6.webp",
+            "difficulty": "Easy"
         }
     ],
     "total": 50,
@@ -76,11 +90,13 @@ const recipes = {
 const Home = () => {
     const location = useLocation();
     console.log(location.pathname.startsWith('/recipes'))
+    console.log(recipes.recipes)
     return (
-        <>
-            <div>Home</div>
-
-        </>
+        <div className="relative md:h-140 flex-col md:flex-row md:flex-wrap flex items-center md:items-start justify-center min-h-full">
+            {recipes.recipes && recipes.recipes.map((recipe: RecipeType) => (
+                <Recipe key={recipe.id} {...recipe} />
+            ))}
+        </div>
     )
 }
 
