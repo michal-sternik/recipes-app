@@ -26,7 +26,7 @@ const Recipe = ({ name, image, cuisine, tags, cookTimeMinutes, difficulty }: Rec
             <hr />
             <div className="font-nunito h-3/5 w-full bg-white flex flex-col p-5 justify-between">
                 <div className='flex flex-row gap-2 flex-wrap'>
-                    {tags.map(tag => <Chip color={ColorsENUM.ORANGE} >{tag}</Chip>)}
+                    {tags.map(tag => <Chip key={tag} color={ColorsENUM.ORANGE} >{tag}</Chip>)}
                 </div>
                 <div className='font-justmeagain text-3xl'>{name}</div>
                 <div className='flex flex-row justify-between'>
