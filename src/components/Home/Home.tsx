@@ -8,6 +8,7 @@ import InputWithImage from '../InputWithImage/InputWithImage';
 import { useCallback, useEffect, useState } from 'react';
 import RecipeService from '../../api/recipeService';
 import { RecipeSkeleton } from '../RecipeSkeleton/RecipeSkeleton';
+import toast from 'react-hot-toast';
 
 
 const ITEM_PER_LOAD = 6
@@ -64,7 +65,7 @@ const Home = () => {
                 );
                 setOffset(offset + ITEM_PER_LOAD)
             } catch (error) {
-                alert("Error fetching recipes: " + error)
+                toast.error("Error fetching recipes: \n" + error)
             } finally {
                 setAllRecipesLoading(false);
             }
@@ -95,7 +96,7 @@ const Home = () => {
             setOffset(offset + ITEM_PER_LOAD)
 
         } catch (error) {
-            alert("Error fetching recipes: " + error)
+            toast.error("Error fetching recipes:\n " + error)
         } finally {
             setAllRecipesLoading(false);
         }
