@@ -7,18 +7,19 @@ import Chip from '../Chip/Chip';
 import InputWithImage from '../InputWithImage/InputWithImage';
 import { useEffect, useRef, useState } from 'react';
 import RecipeService from '../../api/recipeService';
+import { RecipeSkeleton } from '../RecipeSkeleton/RecipeSkeleton';
 
-
+const initialRecipesObject = {
+    recipes: [],
+    total: 0,
+    skip: 0,
+    limit: 6
+}
 
 const Home = () => {
 
     const [activeFilter, setActiveFilter] = useState<string>("All");
-    const [recipesList, setRecipesList] = useState<RecipesType>({
-        recipes: [],
-        total: 0,
-        skip: 0,
-        limit: 6
-    });
+    const [recipesList, setRecipesList] = useState<RecipesType>(initialRecipesObject);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loadingAllRecipes, setAllRecipesLoading] = useState<boolean>(false);
     const initialized = useRef(false)
@@ -87,6 +88,7 @@ const Home = () => {
                 {recipesList.recipes.length > 0 && recipesList.recipes.map((recipe: RecipeType) => (
                     <Recipe key={recipe.id} {...recipe} />
                 ))}
+                {loadingAllRecipes ? Array(initialRecipesObject.limit).fill(0).map((idx) => <RecipeSkeleton key={idx} />) : null}
             </div>
             <div className='flex p-10 justify-center'>
                 <div
