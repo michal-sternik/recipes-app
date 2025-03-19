@@ -20,7 +20,7 @@ const Recipe = ({ name, image, cuisine, tags, cookTimeMinutes, difficulty }: Rec
 
     return (
         <div className="h-120 flex flex-col w-8/10 md:w-3/10 m-5 overflow-hidden box-content rounded-xl border-solid border-1 border-black">
-            <div className="h-2/5 w-full bg-red-500">
+            <div className="h-2/5 w-full">
                 <img src={image} alt={name} className="w-full h-full object-cover" />
             </div>
             <hr />
