@@ -2,21 +2,11 @@ import { Link } from 'react-router-dom';
 import { ColorsENUM, RecipeType } from '../../types/recipeTypes';
 import Chip from '../Chip/Chip';
 import TextWithImageOnLeft from '../TextWithImageOnLeft/TextWithImageOnLeft';
+import { getColorByDifficulty } from '../../utils';
 
 const Recipe = ({ id, name, image, cuisine, tags, cookTimeMinutes, difficulty }: RecipeType) => {
 
-    const getColorByDifficulty = (difficulty: "Easy" | "Medium" | "Hard"): ColorsENUM => {
-        switch (difficulty) {
-            case "Easy":
-                return ColorsENUM.GREEN;
-            case "Medium":
-                return ColorsENUM.ORANGE;
-            case "Hard":
-                return ColorsENUM.RED;
-            default:
-                return ColorsENUM.BLUE;
-        }
-    };
+
 
 
     return (

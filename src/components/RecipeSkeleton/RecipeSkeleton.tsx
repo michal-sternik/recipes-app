@@ -1,9 +1,13 @@
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
 
-export const RecipeSkeleton = () => {
+interface Props {
+    mdWidth?: string
+}
+
+export const RecipeSkeleton = ({ mdWidth = 'w-3/10' }: Props) => {
     return (
-        <div className="h-120 flex flex-col w-8/10 md:w-3/10 m-5 overflow-hidden box-content">
+        <div className={`h-120 flex flex-col w-8/10 md:${mdWidth} m-5 overflow-hidden box-content`}>
             <div className="h-2/5 w-full p-5">
                 <Skeleton width={"100%"} height={"100%"} borderRadius={'10px'} />
             </div>
