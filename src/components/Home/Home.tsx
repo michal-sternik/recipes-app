@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 
 
 const ITEM_PER_LOAD = 6
+const ALL_ITEM_LIMIT = 50;
 
 const Home = () => {
 
@@ -24,6 +25,28 @@ const Home = () => {
     const [loadingAllRecipes, setAllRecipesLoading] = useState<boolean>(false);
     const [searchPhrase, setSearchPhrase] = useState<string>("")
     const [offset, setOffset] = useState<number>(0)
+
+
+
+    const { data: allRecipies, isLoading: allRecipiesLoading } = useSWR(
+        `/recipes/search?limit=${ALL_ITEM_LIMIT}&select=tags,name,image,difficulty,cuisine,cookTimeMinutes,image`,
+        RecipeService.getAllRecipes2,
+        {
+            revalidateOnFocus: false, // Wyłącza rewalidację po powrocie na stronę
+            revalidateOnReconnect: false, // Wyłącza rewalidację po ponownym połączeniu z siecią
+            dedupingInterval: 60000, // Określa czas w ms przez jaki SWR nie wykona ponownego requestu
+        }
+    );
+
+    const { data: filteredRecepies, isLoading: filteredRecepiesLoading } = useSWR(
+        searchPhrase ? `/recipes/search?limit=${offset}&q=${searchPhrase}&select=tags,name,image,difficulty,cuisine,cookTimeMinutes,image` : null,
+        RecipeService.getAllRecipes2,
+        {
+            revalidateOnFocus: false, // Wyłącza rewalidację po powrocie na stronę
+            revalidateOnReconnect: false, // Wyłącza rewalidację po ponownym połączeniu z siecią
+            dedupingInterval: 60000, // Określa czas w ms przez jaki SWR nie wykona ponownego requestu
+        }
+    );
 
 
     const handleDifficultyFilter = (difficulty: string) => {
