@@ -10,7 +10,7 @@ import RecipeService from '../../api/recipeService';
 import { RecipeSkeleton } from '../RecipeSkeleton/RecipeSkeleton';
 import toast from 'react-hot-toast';
 
-
+//https://pastebin.com/zKLe6Mvi
 const ITEM_PER_LOAD = 6
 
 const Home = () => {
@@ -124,6 +124,7 @@ const Home = () => {
     // const location = useLocation();
     // console.log(location.pathname.startsWith('/recipes'))
     // console.log(recipes.recipes)
+
     return (
         <>
             <div className='flex flex-col md:flex-row justify-between py-10 px-5 gap-10'>

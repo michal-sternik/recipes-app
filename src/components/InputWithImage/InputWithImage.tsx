@@ -21,7 +21,7 @@ const InputWithImage = ({ handleInputChange }: InputProps) => {
             const timer = setTimeout(() => {
                 handleInputChange(inputValue)
             }, 400)
-
+            //ewentualnie hook useDebounce
             return () => clearInterval(timer)
 
 
@@ -47,3 +47,4 @@ const InputWithImage = ({ handleInputChange }: InputProps) => {
 };
 
 export default InputWithImage
+
