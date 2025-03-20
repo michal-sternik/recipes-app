@@ -11,14 +11,10 @@ import toast from 'react-hot-toast';
 import useSWR from "swr";
 import { useDebounce } from '../../hooks/useDebouce';
 
-<<<<<<< HEAD
 interface DifficultyMap {
     [key: string]: RecipeType[];
 }
 
-=======
-//https://pastebin.com/zKLe6Mvi
->>>>>>> single-recipe
 const ITEM_PER_LOAD = 6
 const ALL_ITEM_LIMIT = 50;
 const swrConfig = {
@@ -38,13 +34,13 @@ const Home = () => {
 
     const { data: allRecipes, isLoading: allRecipesLoading, error: allDataError } = useSWR(
         `/recipes/search?limit=${ALL_ITEM_LIMIT}&select=tags,name,image,difficulty,cuisine,cookTimeMinutes,image`,
-        RecipeService.getAllRecipes,
+        RecipeService.getRecipes,
         swrConfig
     );
 
     const { data: filteredRecepies, isLoading: filteredRecepiesLoading, error: searchedDataError } = useSWR(
         debouncedSearch ? `/recipes/search?q=${debouncedSearch}&limit=${limit}&select=tags,name,image,difficulty,cuisine,cookTimeMinutes,image` : null,
-        RecipeService.getAllRecipes,
+        RecipeService.getRecipes,
         swrConfig
     );
 
@@ -82,15 +78,12 @@ const Home = () => {
     }, [limit, offset])
 
     useEffect(() => {
-        console.log("tu")
+
         setLimit(ITEM_PER_LOAD)
         setActiveFilter("All")
     }, [debouncedSearch])
 
-    // const location = useLocation();
-    // console.log(location.pathname.startsWith('/recipes'))
-    // console.log(recipes.recipes)
-<<<<<<< HEAD
+
     useEffect(() => {
         if (allDataError) {
             toast.error("Error with all receipes occured: \n" + allDataError)
@@ -103,8 +96,6 @@ const Home = () => {
         }
     }, [searchedDataError])
 
-=======
->>>>>>> single-recipe
 
     return (
         <>

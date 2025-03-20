@@ -18,7 +18,7 @@ const Logo = () => {
             <hr className=' w-2/5' />
             <div className='mx-10 flex flex-row items-center justify-center h-full object-contain'>
                 <img className='w-auto h-full object-contain' src={`../../public/images/${isRecipeDetailPage ? 'logo-black.png' : 'logo.png'}`} alt="Logo" />
-                <span className='font-justmeagain text-3xl d:text-6xl px-5 whitespace-nowrap'> Recipe Book </span>
+                <span className='font-justmeagain text-3xl md:text-6xl px-5 whitespace-nowrap'> Recipe Book </span>
             </div>
             <hr className={`${isRecipeDetailPage ? 'w-0' : "w-2/5"} md:w-2/5`} />
         </div>
