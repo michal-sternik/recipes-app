@@ -5,6 +5,7 @@ import RootLayout from './components/RootLayout/RootLayout'
 import { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Toaster } from 'react-hot-toast'
+import RecipeDetails from './components/RecipeDetails/RecipeDetails'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <Route path='/' element={<RootLayout />}>
         <Route index element={<Navigate to="/recipes" />} />
         <Route path="recipes" element={<Home />} />
+        <Route path='recipes/:recipeId' element={<RecipeDetails />} />
       </Route>
     )
   )

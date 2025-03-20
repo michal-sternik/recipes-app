@@ -11,10 +11,14 @@ import toast from 'react-hot-toast';
 import useSWR from "swr";
 import { useDebounce } from '../../hooks/useDebouce';
 
+<<<<<<< HEAD
 interface DifficultyMap {
     [key: string]: RecipeType[];
 }
 
+=======
+//https://pastebin.com/zKLe6Mvi
+>>>>>>> single-recipe
 const ITEM_PER_LOAD = 6
 const ALL_ITEM_LIMIT = 50;
 const swrConfig = {
@@ -86,6 +90,7 @@ const Home = () => {
     // const location = useLocation();
     // console.log(location.pathname.startsWith('/recipes'))
     // console.log(recipes.recipes)
+<<<<<<< HEAD
     useEffect(() => {
         if (allDataError) {
             toast.error("Error with all receipes occured: \n" + allDataError)
@@ -98,6 +103,8 @@ const Home = () => {
         }
     }, [searchedDataError])
 
+=======
+>>>>>>> single-recipe
 
     return (
         <>

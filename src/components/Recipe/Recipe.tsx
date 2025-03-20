@@ -1,21 +1,12 @@
+import { Link } from 'react-router-dom';
 import { ColorsENUM, RecipeType } from '../../types/recipeTypes';
 import Chip from '../Chip/Chip';
 import TextWithImageOnLeft from '../TextWithImageOnLeft/TextWithImageOnLeft';
+import { getColorByDifficulty } from '../../utils';
 
-const Recipe = ({ name, image, cuisine, tags, cookTimeMinutes, difficulty }: RecipeType) => {
+const Recipe = ({ id, name, image, cuisine, tags, cookTimeMinutes, difficulty }: RecipeType) => {
 
-    const getColorByDifficulty = (difficulty: "Easy" | "Medium" | "Hard"): ColorsENUM => {
-        switch (difficulty) {
-            case "Easy":
-                return ColorsENUM.GREEN;
-            case "Medium":
-                return ColorsENUM.ORANGE;
-            case "Hard":
-                return ColorsENUM.RED;
-            default:
-                return ColorsENUM.BLUE;
-        }
-    };
+
 
 
     return (
@@ -28,7 +19,7 @@ const Recipe = ({ name, image, cuisine, tags, cookTimeMinutes, difficulty }: Rec
                 <div className='flex flex-row gap-2 flex-wrap'>
                     {tags.map(tag => <Chip key={tag} color={ColorsENUM.ORANGE} >{tag}</Chip>)}
                 </div>
-                <div className='font-justmeagain text-3xl'>{name}</div>
+                <div className='font-justmeagain text-3xl'><Link to={id.toString()}>{name}</Link></div>
                 <div className='flex flex-row justify-between'>
 
                     <TextWithImageOnLeft imageSrc='../../public/images/cuisine.png' >Cuisine </TextWithImageOnLeft>

@@ -7,7 +7,7 @@ type HeaderProps = {
 
 const Header = ({ children }: HeaderProps) => {
     return (
-        <div className='relative w-full h-60 flex items-center'>
+        <div className='relative w-full h-30 md:h-60 flex items-center'>
             <Logo />
             {children}
         </div>

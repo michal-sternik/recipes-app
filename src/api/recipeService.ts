@@ -29,13 +29,22 @@ class RecipeService {
     //     return response.data.recipes
     // }
 
+<<<<<<< HEAD
     // public static async getRecipeById(id: number) {
+=======
+    public static async getRecipeById(id: string) {
+>>>>>>> single-recipe
 
     //     const response = await recipeApi.get(`/recipes/${id}?select=tags,name,image,difficulty,cuisine,cookTimeMinutes,image,servings,ingredients,instructions`)
     //     return response.data
     // }
 
     public static async getAllRecipes(url: string): Promise<RecipeType[]> {
+
+        const response = await recipeApi.get(url)
+        return response.data.recipes
+    }
+    public static async getAllRecipes2(url: string): Promise<RecipeType[]> {
 
         const response = await recipeApi.get(url)
         return response.data.recipes
