@@ -3,31 +3,10 @@ import { useEffect, useRef, useState } from "react";
 
 interface InputProps {
     handleInputChange: (input: string) => void,
+    inputValue: string
 }
 
-const InputWithImage = ({ handleInputChange }: InputProps) => {
-    const [inputValue, setInputValue] = useState("");
-    const touched = useRef(false)
-
-    useEffect(() => {
-
-        // react wywoluje dwa razy pod rzad render przy pierwszym renderowaniu w strict mode
-        // wiec musimy wymusic wywolanie funkcji tylko jesli juz cos zostanie wpisane przez uzytkownika
-        // za pomoca useRef dostajemy dostep do wartosci zmiennej, ktora aktualizuje sie od razu, nie trzeba czekac na kolejny render by dostac jej wartosc (a w tym przypadku 2 rendery ze strict mode)
-
-        if (touched.current) {
-
-            console.log('inside')
-            const timer = setTimeout(() => {
-                handleInputChange(inputValue)
-            }, 400)
-
-            return () => clearInterval(timer)
-
-
-        }
-
-    }, [inputValue, handleInputChange])
+const InputWithImage = ({ handleInputChange, inputValue }: InputProps) => {
 
 
     return (
@@ -36,8 +15,7 @@ const InputWithImage = ({ handleInputChange }: InputProps) => {
             <input
                 type="text"
                 onChange={(e) => {
-                    touched.current = true
-                    setInputValue(e.target.value)
+                    handleInputChange(e.target.value)
                 }}
                 value={inputValue}
                 className="border-none outline-none w-full h-auto"
