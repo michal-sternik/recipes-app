@@ -22,16 +22,16 @@ const Recipe = ({ id, name, image, cuisine, tags, cookTimeMinutes, difficulty }:
                 <div className='font-justmeagain text-3xl'><Link to={id.toString()}>{name}</Link></div>
                 <div className='flex flex-row justify-between'>
 
-                    <TextWithImageOnLeft imageSrc='../../public/images/cuisine.png' >Cuisine </TextWithImageOnLeft>
-                    <Chip color={ColorsENUM.RED} >{cuisine}</Chip>
+                    <TextWithImageOnLeft imageSrc='../../public/images/cuisine.png' ><span className='md:text-xs lg:text-lg'>Cuisine </span></TextWithImageOnLeft>
+                    <Chip color={ColorsENUM.RED} ><span className='md:text-xs lg:text-lg'>{cuisine}</span></Chip>
                 </div>
                 <div className='flex flex-row justify-between'>
-                    <TextWithImageOnLeft imageSrc='../../public/images/time.png' >Cooking Time </TextWithImageOnLeft>
-                    <Chip color={ColorsENUM.BLUE} >{cookTimeMinutes} min</Chip>
+                    <TextWithImageOnLeft imageSrc='../../public/images/time.png' ><span className='md:text-xs lg:text-lg text-wrap'>Cooking Time </span> </TextWithImageOnLeft>
+                    <Chip color={ColorsENUM.BLUE} ><span className='md:text-xs lg:text-lg'>{cookTimeMinutes} min</span></Chip>
                 </div>
                 <div className='flex' >
                     <Chip color={getColorByDifficulty(difficulty)} backgroundColor>
-                        {difficulty}
+                        <span className='md:text-xs lg:text-lg'>{difficulty}</span>
                     </Chip>
                 </div>
             </div>

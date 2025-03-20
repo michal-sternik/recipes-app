@@ -1,36 +1,36 @@
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom"
 import RecipeService from "../../api/recipeService";
-import { useEffect, useState } from "react";
-import { ColorsENUM, RecipeDetailsType } from "../../types/recipeTypes";
+import { useEffect } from "react";
+import { ColorsENUM } from "../../types/recipeTypes";
 import Chip from "../Chip/Chip";
 import TextWithImageOnLeft from "../TextWithImageOnLeft/TextWithImageOnLeft";
 import { RecipeSkeleton } from "../RecipeSkeleton/RecipeSkeleton";
 import Skeleton from "react-loading-skeleton";
+import useSWR from "swr";
 
+const swrConfig = {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    dedupingInterval: 60000,
+}
 
 const RecipeDetails = () => {
 
-    const [recipe, setRecipe] = useState<RecipeDetailsType | undefined>(undefined)
     const { recipeId } = useParams();
-    console.log(recipeId)
 
-    const fetchRecipeDetails = async (recipeId: string) => {
-        try {
+    const { data: recipe, error: allDataError } = useSWR(
+        `/recipes/${recipeId}?select=tags,name,image,difficulty,cuisine,cookTimeMinutes,image,servings,ingredients,instructions`,
+        RecipeService.getRecipeById,
+        swrConfig
+    );
 
-            const recipe: RecipeDetailsType = await RecipeService.getRecipeById(recipeId);
-            setRecipe(recipe)
-
-        } catch (error) {
-
-            toast.error("Something went wrong: \n" + error)
-        }
-
-    }
 
     useEffect(() => {
-        fetchRecipeDetails(recipeId!)
-    }, [recipeId])
+        if (allDataError) {
+            toast.error("Error with this recipe: \n" + allDataError)
+        }
+    }, [allDataError])
 
     return (
         <div className="flex flex-col gap-20 md:m-10">
@@ -69,14 +69,14 @@ const RecipeDetails = () => {
                 </div>
             </div>
             {recipe &&
-                <div className="flex flex-col-reverse md:flex-col md:flex-row gap-20">
+                <div className="flex flex-col-reverse md:flex-row gap-20">
                     <div className="h-auto w-full md:flex-5/10">
                         <p className="font-justmeagain text-6xl mb-10">Instructions</p>
                         <ul className="flex flex-col gap-5">
                             {recipe.instructions.map((instruction, idx) => <li className="font-nunito text-xl">{idx + 1}. {instruction}</li>)}
                         </ul>
                     </div>
-                    <div className="h-auto md:flex-5/10 border-black border-solid border-1 pl-10 pb-10">
+                    <div className="h-auto md:flex-5/10 border-black border-solid border-1 pl-10 pb-10 rounded-lg">
                         <p className="font-justmeagain text-6xl mb-10">Ingredients</p>
                         <ul className="flex flex-col gap-5 list-disc">
                             {recipe.ingredients.map((ingredient) => <li className="font-nunito text-xl">{ingredient}</li>)}

@@ -21,7 +21,7 @@ const Chip = ({ color, backgroundColor, onClick, children }: ChipProps) => {
     return (
         <div
             onClick={onClick}
-            className={`${color ? colorVariants[color] : "border-black"} ${onClick ? "cursor-pointer" : ""} font-nunito border-solid border-1 rounded-lg px-5 h-auto flex items-center `}>
+            className={`${color ? colorVariants[color] : "border-black"} ${onClick ? "cursor-pointer" : ""} font-nunito border-solid border-1 rounded-lg px-5 md:px-2 lg:px-5 h-auto flex items-center `}>
             {children}
         </div>
     )
