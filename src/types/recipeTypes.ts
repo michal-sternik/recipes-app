@@ -1,4 +1,4 @@
-export interface Recipes {
+export interface RecipesType {
     recipes: Array<RecipeType>
     total: number;
     skip: number;

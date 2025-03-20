@@ -1,115 +1,141 @@
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useLocation } from 'react-router-dom'
 import Recipe from '../Recipe/Recipe';
-import { ColorsENUM, Recipes, RecipeType } from '../../types/recipeTypes';
+import { ColorsENUM, RecipesType, RecipeType } from '../../types/recipeTypes';
 import Chip from '../Chip/Chip';
 import InputWithImage from '../InputWithImage/InputWithImage';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import RecipeService from '../../api/recipeService';
+import { RecipeSkeleton } from '../RecipeSkeleton/RecipeSkeleton';
+import toast from 'react-hot-toast';
 
 
-const recipes: Recipes = {
-    "recipes": [
-        {
-            "id": 1,
-            "tags": [
-                "Pizza",
-                "Italian"
-            ],
-            "name": "Classic Margherita Pizza",
-            "cuisine": "Italian",
-            "cookTimeMinutes": 15,
-            "image": "https://cdn.dummyjson.com/recipe-images/1.webp",
-            "difficulty": "Easy"
-        },
-        {
-            "id": 2,
-            "tags": [
-                "Vegetarian",
-                "Stir-fry",
-                "Asian"
-            ],
-            "name": "Vegetarian Stir-Fry",
-            "cuisine": "Asian",
-            "cookTimeMinutes": 20,
-            "image": "https://cdn.dummyjson.com/recipe-images/2.webp",
-            "difficulty": "Medium"
-        },
-        {
-            "id": 3,
-            "tags": [
-                "Cookies",
-                "Dessert",
-                "Baking"
-            ],
-            "name": "Chocolate Chip Cookies",
-            "cuisine": "American",
-            "cookTimeMinutes": 10,
-            "image": "https://cdn.dummyjson.com/recipe-images/3.webp",
-            "difficulty": "Easy"
-        },
-        {
-            "id": 4,
-            "tags": [
-                "Pasta",
-                "Chicken"
-            ],
-            "name": "Chicken Alfredo Pasta",
-            "cuisine": "Italian",
-            "cookTimeMinutes": 20,
-            "image": "https://cdn.dummyjson.com/recipe-images/4.webp",
-            "difficulty": "Medium"
-        },
-        {
-            "id": 5,
-            "tags": [
-                "Chicken",
-                "Salsa"
-            ],
-            "name": "Mango Salsa Chicken",
-            "cuisine": "Mexican",
-            "cookTimeMinutes": 25,
-            "image": "https://cdn.dummyjson.com/recipe-images/5.webp",
-            "difficulty": "Easy"
-        },
-        {
-            "id": 6,
-            "tags": [
-                "Salad",
-                "Quinoa"
-            ],
-            "name": "Quinoa Salad with Avocado",
-            "cuisine": "Mediterranean",
-            "cookTimeMinutes": 15,
-            "image": "https://cdn.dummyjson.com/recipe-images/6.webp",
-            "difficulty": "Easy"
-        }
-    ],
-    "total": 50,
-    "skip": 0,
-    "limit": 6
-}
-
+const ITEM_PER_LOAD = 6
 
 const Home = () => {
 
     const [activeFilter, setActiveFilter] = useState<string>("All");
+    const [recipesList, setRecipesList] = useState<RecipeType[]>([]);
+    const [recipesFilteredByDifficulty, setRecipesFilteredByDifficulty] = useState<Record<string, RecipeType[]>>([])
+    const [currentRecipes, setCurrentRecipes] = useState<RecipeType[]>([])
+
+
+    const [loadingAllRecipes, setAllRecipesLoading] = useState<boolean>(false);
+    const [searchPhrase, setSearchPhrase] = useState<string>("")
+    const [offset, setOffset] = useState<number>(0)
+
+
+    const handleDifficultyFilter = (difficulty: string) => {
+        setCurrentRecipes([])
+        setOffset(0)
+        setActiveFilter(difficulty)
+    }
+
+
+    const loadMoreRecipes = useCallback((difficulty: string = "All") => {
+        console.log(difficulty)
+        setCurrentRecipes(prevState => {
+            const recipesToAdd = difficulty === "All"
+                ? recipesList.slice(offset, offset + ITEM_PER_LOAD)
+                : recipesFilteredByDifficulty[difficulty!].slice(offset, offset + ITEM_PER_LOAD);
+            console.log(recipesToAdd)
+            return [...prevState, ...recipesToAdd];
+        });
+        setOffset(offset + ITEM_PER_LOAD)
+
+    }, [offset, recipesFilteredByDifficulty, recipesList]);
+
+
+    const handleInputChange = useCallback((input: string) => {
+        setCurrentRecipes([])
+        setOffset(0)
+        setSearchPhrase(input)
+        setActiveFilter("All")
+    }, [])
+
+
+    const fetchRecipesBySearchPhrase = async (searchPhrase: string) => {
+        if (searchPhrase !== "") {
+            try {
+                setAllRecipesLoading(true);
+                const recipesListFromApi: RecipesType = await RecipeService.getRecipesBySearchPhrase(searchPhrase, ITEM_PER_LOAD, offset);
+                setCurrentRecipes(
+                    [...currentRecipes, ...recipesListFromApi.recipes]
+                );
+                setOffset(offset + ITEM_PER_LOAD)
+            } catch (error) {
+                toast.error("Error fetching recipes: \n" + error)
+            } finally {
+                setAllRecipesLoading(false);
+            }
+        }
+        else {
+            loadMoreRecipes()
+        }
+    };
+
+
+    const fetchAllRecipes = async () => {
+        try {
+
+            setAllRecipesLoading(true);
+            const recipesListFromApi: RecipesType = await RecipeService.getAllRecipes();
+            setRecipesList(recipesListFromApi.recipes)
+            const arr: string[] = ["Easy", "Medium", "Hard"];
+            arr.forEach((difficulty: string) => {
+                setRecipesFilteredByDifficulty((prevState) => ({
+                    ...prevState,
+                    [difficulty]: recipesListFromApi.recipes.filter(
+                        (recipe) => recipe.difficulty === difficulty
+                    ),
+                }));
+            });
+
+            setCurrentRecipes(recipesListFromApi.recipes.slice(offset, offset + ITEM_PER_LOAD));
+            setOffset(offset + ITEM_PER_LOAD)
+
+        } catch (error) {
+            toast.error("Error fetching recipes:\n " + error)
+        } finally {
+            setAllRecipesLoading(false);
+        }
+    }
+
+
+    useEffect(() => {
+
+        fetchRecipesBySearchPhrase(searchPhrase)
+    }, [searchPhrase])
+
+    useEffect(() => {
+        loadMoreRecipes(activeFilter)
+    }, [activeFilter])
+
+    useEffect(() => {
+
+        fetchAllRecipes();
+
+    }, []);
 
 
 
-    const location = useLocation();
-    console.log(location.pathname.startsWith('/recipes'))
-    console.log(recipes.recipes)
+
+    // const location = useLocation();
+    // console.log(location.pathname.startsWith('/recipes'))
+    // console.log(recipes.recipes)
     return (
         <>
             <div className='flex flex-col md:flex-row justify-between py-10 px-5 gap-10'>
-                <InputWithImage />
+                <InputWithImage handleInputChange={handleInputChange} />
                 <div className='flex md:flex-row-reverse gap-2 flex-row-reverse flex-wrap-reverse justify-end'>
 
                     {["All", "Easy", "Medium", "Hard"].reverse().map(elem => (
                         <Chip
+                            key={elem}
                             color={activeFilter === elem ? ColorsENUM.BLUE : undefined}
                             backgroundColor={activeFilter === elem}
-                            onClick={() => setActiveFilter(elem)}
+                            onClick={() => handleDifficultyFilter(elem)}
                         >
                             {elem}
                         </Chip>
@@ -118,15 +144,18 @@ const Home = () => {
                 </div>
             </div>
             <div className="relative  flex-col md:flex-row md:flex-wrap flex items-center md:items-start justify-center xl:justify-between min-h-full">
-                {recipes.recipes && recipes.recipes.map((recipe: RecipeType) => (
+                {currentRecipes && currentRecipes.map((recipe: RecipeType) => (
                     <Recipe key={recipe.id} {...recipe} />
                 ))}
+                {(currentRecipes.length === 0 && !loadingAllRecipes) && <p>No results found.</p>}
+                {loadingAllRecipes ? Array(ITEM_PER_LOAD).fill(0).map((_, idx) => <RecipeSkeleton key={idx} />) : null}
             </div>
             <div className='flex p-10 justify-center'>
                 <div
-                    onClick={() => { }}
-                    className='cursor-pointer font-justmeagain border-solid border-1 rounded-lg px-5 h-auto flex items-center text-3xl'>
-                    Load more
+                    onClick={searchPhrase ? () => fetchRecipesBySearchPhrase(searchPhrase) : () => loadMoreRecipes(activeFilter)}
+                    className='w-40 h-15 justify-center cursor-pointer font-justmeagain border-solid border-1 rounded-lg p-1 flex items-center text-3xl'>
+                    {loadingAllRecipes ? <img src='../../public/svg/loading.svg' /> : "Load more"}
+
                 </div>
             </div >
         </>

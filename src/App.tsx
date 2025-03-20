@@ -2,6 +2,9 @@ import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterP
 import './App.css'
 import Home from './components/Home/Home'
 import RootLayout from './components/RootLayout/RootLayout'
+import { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
@@ -16,7 +19,10 @@ function App() {
   )
 
   return (
-    <RouterProvider router={router} />
+    <SkeletonTheme baseColor='#BBBBBB' highlightColor='#CCCCCC'>
+      <Toaster position='bottom-left' />
+      <RouterProvider router={router} />
+    </SkeletonTheme>
   )
 }
 
