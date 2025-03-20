@@ -21,3 +21,15 @@ export enum ColorsENUM {
     ORANGE = 'ORANGE',
     BLUE = 'BLUE'
 }
+export interface RecipeDetailsType {
+    id: number;
+    tags: string[];
+    name: string;
+    cuisine: string;
+    cookTimeMinutes: number;
+    image: string;
+    difficulty: "Easy" | "Medium" | "Hard",
+    ingredients: string[],
+    instructions: string[],
+    servings: number;
+}
