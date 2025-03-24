@@ -13,7 +13,7 @@ const Recipe = ({ id, name, image, cuisine, tags, cookTimeMinutes, difficulty }:
 
     return (
         <>
-            {!imageLoaded && (<RecipeSkeleton />)}
+            {!imageLoaded && (<RecipeSkeleton mdWidth='w-3/10' />)}
             {/* if image is not loaded we have to display it to make it possible to load, so we display it with hidden property */}
             <Link to={id.toString()} className={`h-120 flex flex-col w-9/10 md:w-44/100 xl:w-3/10 m-5 overflow-hidden box-content rounded-xl border-solid border-1 border-black
             ${!imageLoaded ? 'hidden' : ''}`}>
