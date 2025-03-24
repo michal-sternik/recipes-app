@@ -8,11 +8,11 @@ interface Props {
 export const RecipeSkeleton = ({ mdWidth = 'w-3/10' }: Props) => {
 
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const safeClasses = [
-        "md:w-1/1",
-        "md:w-3/10",
-    ];
+
+    // const safeClasses = [
+    //     "md:w-1/1",
+    //     "md:w-3/10",
+    // ];
     const dynamic = "md:" + mdWidth
     return (
         <div className={clsx('h-120 flex flex-col w-8/10', dynamic, 'm-5 overflow-hidden box-content')}>
