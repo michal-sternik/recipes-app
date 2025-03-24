@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import Logo from '../Logo/Logo';
 
+
 type HeaderProps = {
     children?: ReactNode;
 };

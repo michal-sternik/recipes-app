@@ -1,11 +1,11 @@
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom'
 import './App.css'
-import Home from './components/Home/Home'
-import RootLayout from './components/RootLayout/RootLayout'
+import Home from './Components/Home/Home'
+import RootLayout from './Components/RootLayout/RootLayout'
 import { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Toaster } from 'react-hot-toast'
-import RecipeDetails from './components/RecipeDetails/RecipeDetails'
+import RecipeDetails from './Components/RecipeDetails/RecipeDetails'
 
 function App() {
 
