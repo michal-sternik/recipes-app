@@ -1,6 +1,6 @@
 import { ColorsENUM } from "./types/recipeTypes";
 
-export const getColorByDifficulty = (difficulty: "Easy" | "Medium" | "Hard"): ColorsENUM => {
+export const getColorByDifficulty = (difficulty: string): ColorsENUM => {
     switch (difficulty) {
         case "Easy":
             return ColorsENUM.GREEN;

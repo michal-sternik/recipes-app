@@ -7,10 +7,11 @@ type ChipProps = {
     color?: ColorsENUM;
     backgroundColor?: boolean;
     children: React.ReactNode;
-    onClick?: () => void
+    onClick?: () => void,
+    constantWidth?: boolean
 };
 
-const Chip = ({ color, backgroundColor, onClick, children }: ChipProps) => {
+const Chip = ({ color, backgroundColor, onClick, children, constantWidth }: ChipProps) => {
     const colorVariants: Record<ColorsENUM, string> = {
         [ColorsENUM.RED]: `border-[var(--color-red)]  text-[var(--color-red)]   ${backgroundColor ? 'bg-[var(--color-red)]/10' : ""}`,
         [ColorsENUM.GREEN]: `border-[var(--color-green)]  text-[var(--color-green)]   ${backgroundColor ? 'bg-[var(--color-green)]/10' : ""}`,
@@ -21,7 +22,7 @@ const Chip = ({ color, backgroundColor, onClick, children }: ChipProps) => {
     return (
         <div
             onClick={onClick}
-            className={`${color ? colorVariants[color] : "border-black"} ${onClick ? "cursor-pointer" : ""} font-nunito border-solid border-1 rounded-lg px-5 md:px-2 lg:px-5 h-auto flex items-center `}>
+            className={`${color ? colorVariants[color] : "border-black"} ${onClick ? "cursor-pointer" : ""} ${constantWidth ? 'w-[90px]' : ""} font-nunito border-solid border-1 rounded-lg px-5 md:px-2 lg:px-5 h-auto flex items-center justify-center `}>
             {children}
         </div>
     )

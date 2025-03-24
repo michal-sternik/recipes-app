@@ -47,19 +47,19 @@ const RecipeDetails = () => {
                             <div className='font-justmeagain text-6xl'>{recipe.name}</div>
                             <div className="flex flex-col gap-3">
                                 <div className='flex flex-row justify-between'>
-                                    <TextWithImageOnLeft imageSrc='../../public/images/level.png'>Level </TextWithImageOnLeft>
+                                    <TextWithImageOnLeft imageSrc='/images/level.png'>Level </TextWithImageOnLeft>
                                     <Chip color={ColorsENUM.ORANGE} backgroundColor>{recipe.difficulty}</Chip>
                                 </div>
                                 <div className='flex flex-row justify-between'>
-                                    <TextWithImageOnLeft imageSrc='../../public/images/servings.png'>Servings </TextWithImageOnLeft>
+                                    <TextWithImageOnLeft imageSrc='/images/servings.png'>Servings </TextWithImageOnLeft>
                                     <Chip color={ColorsENUM.ORANGE}>{recipe.servings}</Chip>
                                 </div>
                                 <div className='flex flex-row justify-between'>
-                                    <TextWithImageOnLeft imageSrc='../../public/images/cuisine.png'>Cuisine </TextWithImageOnLeft>
+                                    <TextWithImageOnLeft imageSrc='/images/cuisine.png'>Cuisine </TextWithImageOnLeft>
                                     <Chip color={ColorsENUM.RED}>{recipe.cuisine}</Chip>
                                 </div>
                                 <div className='flex flex-row justify-between'>
-                                    <TextWithImageOnLeft imageSrc='../../public/images/time.png'>Cooking Time </TextWithImageOnLeft>
+                                    <TextWithImageOnLeft imageSrc='/images/time.png'>Cooking Time </TextWithImageOnLeft>
                                     <Chip color={ColorsENUM.BLUE}>{recipe.cookTimeMinutes} min</Chip>
                                 </div>
 
