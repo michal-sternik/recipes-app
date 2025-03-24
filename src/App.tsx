@@ -16,6 +16,7 @@ function App() {
         <Route index element={<Navigate to="/recipes" />} />
         <Route path="recipes" element={<Home />} />
         <Route path='recipes/:recipeId' element={<RecipeDetails />} />
+        <Route path='*' element={<Navigate to="/recipes" />} />
       </Route>
     )
   )
