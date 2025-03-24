@@ -127,7 +127,11 @@ const Home = () => {
             </div>
             <div className='flex p-10 justify-center'>
                 <div
-                    onClick={() => handleLoadMore()}
+                    onClick={() => {
+                        if (displayedRecepies?.length !== 0) {
+                            handleLoadMore()
+                        }
+                    }}
                     className={`w-40 h-15 justify-center ${displayedRecepies?.length === 0 ? 'cursor-default' : 'cursor-pointer'} font-justmeagain border-solid border-1 rounded-lg p-1 flex items-center text-3xl`}>
                     {isLoading ? <img src='/svg/loading.svg' /> : displayedRecepies?.length === 0 ? "Nothing found." : "Load more"}
 
