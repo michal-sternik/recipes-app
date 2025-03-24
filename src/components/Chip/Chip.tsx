@@ -11,6 +11,7 @@ type ChipProps = {
     constantWidth?: boolean
 };
 
+
 const Chip = ({ color, backgroundColor, onClick, children, constantWidth }: ChipProps) => {
     const colorVariants: Record<ColorsENUM, string> = {
         [ColorsENUM.RED]: `border-[var(--color-red)]  text-[var(--color-red)]   ${backgroundColor ? 'bg-[var(--color-red)]/10' : ""}`,
