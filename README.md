@@ -5,7 +5,7 @@ This is a recipes app, which allows user to fetch recipes from external api. Use
 - get batched recipes (pagination)
 - search for specific recipe by search phrase
 
-#### You can find live demo here: 
+#### You can find live demo here: https://recipes-app-sternik.vercel.app/recipes
 
 
 ## Prerequisites
