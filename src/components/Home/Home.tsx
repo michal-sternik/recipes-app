@@ -10,6 +10,7 @@ import { RecipeSkeleton } from '../RecipeSkeleton/RecipeSkeleton';
 import toast from 'react-hot-toast';
 import useSWR from "swr";
 import { useDebounce } from '../../hooks/useDebouce';
+import { getColorByDifficulty } from '../../utils';
 
 interface DifficultyMap {
     [key: string]: RecipeType[];
@@ -77,11 +78,12 @@ const Home = () => {
         setLimit(limit + ITEM_PER_LOAD)
     }, [limit, offset])
 
-    useEffect(() => {
-
-        setLimit(ITEM_PER_LOAD)
-        setActiveFilter("All")
-    }, [debouncedSearch])
+    const handleSearchPhraseChange = (value: string) => {
+        setSearchPhrase(value);
+        setActiveFilter("All");
+        setLimit(ITEM_PER_LOAD);
+        setOffset(0)
+    };
 
 
     useEffect(() => {
@@ -96,19 +98,19 @@ const Home = () => {
         }
     }, [searchedDataError])
 
-
     return (
         <>
-            <div className='flex flex-col md:flex-row justify-between py-10 px-5 gap-10'>
-                <InputWithImage handleInputChange={setSearchPhrase} inputValue={searchPhrase} />
+            <div className='flex flex-col md:flex-row justify-between py-10 px-5 xl:px-12 gap-10 flex-wrap'>
+                <InputWithImage handleInputChange={handleSearchPhraseChange} inputValue={searchPhrase} />
                 <div className='flex md:flex-row-reverse gap-2 flex-row-reverse flex-wrap-reverse justify-end'>
 
-                    {["All", "Easy", "Medium", "Hard"].reverse().map(elem => (
+                    {["All", "Easy", "Medium", "Hard"].reverse().map((elem: string) => (
                         <Chip
                             key={elem}
-                            color={activeFilter === elem ? ColorsENUM.BLUE : undefined}
+                            color={activeFilter === elem ? getColorByDifficulty(elem) : undefined}
                             backgroundColor={activeFilter === elem}
                             onClick={() => handleDifficultyFilter(elem)}
+                            constantWidth={true}
                         >
                             {elem}
                         </Chip>
@@ -116,18 +118,18 @@ const Home = () => {
 
                 </div>
             </div>
-            <div className="relative  flex-col md:flex-row md:flex-wrap flex items-center md:items-start justify-center xl:justify-between min-h-full">
+            <div className="relative  flex-col md:flex-row md:flex-wrap flex items-center md:items-start justify-center min-h-full">
                 {displayedRecepies && displayedRecepies.map((recipe: RecipeType) => (
                     <Recipe key={recipe.id} {...recipe} />
                 ))}
-                {(displayedRecepies?.length === 0 && !isLoading) && <p className='text-3xl '>No results found.</p>}
+
                 {isLoading ? Array(ITEM_PER_LOAD).fill(0).map((_, idx) => <RecipeSkeleton key={idx} />) : null}
             </div>
             <div className='flex p-10 justify-center'>
                 <div
                     onClick={() => handleLoadMore()}
-                    className='w-40 h-15 justify-center cursor-pointer font-justmeagain border-solid border-1 rounded-lg p-1 flex items-center text-3xl'>
-                    {isLoading ? <img src='../../public/svg/loading.svg' /> : displayedRecepies?.length === 0 ? "Nothing found." : "Load more"}
+                    className={`w-40 h-15 justify-center ${displayedRecepies?.length === 0 ? 'cursor-default' : 'cursor-pointer'} font-justmeagain border-solid border-1 rounded-lg p-1 flex items-center text-3xl`}>
+                    {isLoading ? <img src='/svg/loading.svg' /> : displayedRecepies?.length === 0 ? "Nothing found." : "Load more"}
 
                 </div>
             </div >
