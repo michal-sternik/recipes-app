@@ -1,7 +1,6 @@
 
 
 import Recipe from '../Recipe/Recipe';
-import { ColorsENUM, RecipeType } from '../../types/recipeTypes';
 import Chip from '../Chip/Chip';
 import InputWithImage from '../InputWithImage/InputWithImage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -11,6 +10,7 @@ import toast from 'react-hot-toast';
 import useSWR from "swr";
 import { useDebounce } from '../../hooks/useDebouce';
 import { getColorByDifficulty } from '../../utils';
+import { RecipeType } from '../../types/recipeTypes';
 
 interface DifficultyMap {
     [key: string]: RecipeType[];
